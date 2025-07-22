@@ -83,6 +83,6 @@ def processar_lancamento(dados):
     response = requests.post(url, headers=headers, data=json.dumps(body))
 
     if response.status_code == 201:
-        print("✅ Lançamento inserido com sucesso.")
+        print("✅ Lançamento inserido com sucesso!")
     else:
         raise Exception(f"Erro ao inserir lançamento: {response.status_code}\n{response.text}")
