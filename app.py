@@ -3,6 +3,10 @@ from lancador import processar_lancamento
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "API funcionando no Azure!"
+
 @app.route("/lancar", methods=["POST"])
 def lancar():
     data = request.get_json()
