@@ -14,6 +14,6 @@ def lancar():
         return jsonify({"erro": "JSON inválido"}), 400
     try:
         processar_lancamento(data)
-        return jsonify({"status": "OK", "mensagem": "Lançamento processado"})
+        return jsonify({"status": "OK", "mensagem": "Lançamento processado."})
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
