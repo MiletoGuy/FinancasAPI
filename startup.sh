@@ -1,26 +1,26 @@
 #!/bin/bash
 
-echo "== Iniciando startup ==" >> /home/LogFiles/startup.log
+LOG_FILE=/home/LogFiles/startup.log
+echo "== Iniciando startup ==" >> $LOG_FILE
+echo "Diretório atual: $(pwd)" >> $LOG_FILE
+ls -l >> $LOG_FILE
 
-# Mostra o diretório atual
-echo "Diretório atual: $(pwd)" >> /home/LogFiles/startup.log
+# Caminho padrão da aplicação
+APP_DIR=/home/site/wwwroot
 
-# Lista os arquivos no diretório
-echo "Conteúdo do diretório:" >> /home/LogFiles/startup.log
-ls -l >> /home/LogFiles/startup.log
+# Extrair a aplicação se necessário
+cd $APP_DIR
+if [ -f output.tar.gz ]; then
+    echo "== Extraindo output.tar.gz ==" >> $LOG_FILE
+    tar -xzf output.tar.gz >> $LOG_FILE 2>&1
+else
+    echo "Arquivo output.tar.gz não encontrado" >> $LOG_FILE
+fi
 
-# Lista o wwwroot (caso esteja fora dele)
-echo "Conteúdo do /home/site/wwwroot:" >> /home/LogFiles/startup.log
-ls -l /home/site/wwwroot >> /home/LogFiles/startup.log
+# Confirma se app.py está lá
+ls -l $APP_DIR >> $LOG_FILE
 
-# Troca para o diretório correto
-cd /home/site/wwwroot
-
-# Mostra de novo o local após o cd
-echo "Diretório após cd: $(pwd)" >> /home/LogFiles/startup.log
-ls -l >> /home/LogFiles/startup.log
-
-echo "== Iniciando Gunicorn ==" >> /home/LogFiles/startup.log
-
-# Rodar a aplicação
-gunicorn --bind=0.0.0.0:8000 app:app >> /home/LogFiles/startup.log 2>&1
+# Rodar o Gunicorn de dentro do wwwroot
+cd $APP_DIR
+echo "== Iniciando Gunicorn ==" >> $LOG_FILE
+gunicorn --bind=0.0.0.0:8000 app:app >> $LOG_FILE 2>&1
