@@ -51,7 +51,3 @@ def deletar_tarefa(id):
     global tarefas
     tarefas = [t for t in tarefas if t["id"] != id]
     return jsonify({"mensagem": f"Tarefa {id} removida"}), 200
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
-
