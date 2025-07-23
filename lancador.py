@@ -11,7 +11,7 @@ CACHE_PATH = "token_cache.json"
 CLIENT_ID = "40806653-a5ec-43a1-b3a9-cdd38b1ff378"
 TENANT_ID = "consumers"
 AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
-SCOPES = ["Files.ReadWrite", "User.Read"]
+SCOPES = ['Files.ReadWrite.All', 'User.Read']
 
 EXCEL_FILE_ID = "762E8B9DC95EFC50!s2ef358514d2f429c9a71afe74ede77c3"  # ID correto da sua planilha
 TABLE_NAME = "Lancamentos"  # Nome da tabela no Excel
@@ -47,6 +47,7 @@ def processar_lancamento(dados):
     accounts = app.get_accounts()
     if accounts:
         result = app.acquire_token_silent(SCOPES, account=accounts[0])
+
     else:
         result = None
 
@@ -57,6 +58,7 @@ def processar_lancamento(dados):
             raise Exception("Falha ao iniciar device flow.")
         print(f"Acesse {flow['verification_uri']} e insira o código: {flow['user_code']}")
         result = app.acquire_token_by_device_flow(flow)
+
 
     if "access_token" not in result:
         raise Exception("Erro na autenticação: " + str(result))
