@@ -1,4 +1,1 @@
 flask
-msal
-requests
-gunicorn
