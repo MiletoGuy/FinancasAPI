@@ -12,7 +12,7 @@ APP_DIR=/home/site/wwwroot
 cd $APP_DIR
 if [ -f output.tar.gz ]; then
     echo "== Extraindo output.tar.gz ==" >> $LOG_FILE
-    tar -xzf output.tar.gz >> $LOG_FILE 2>&1
+    tar -xzf output.tar.gz --exclude='antenv' --overwrite >> $LOG_FILE 2>&1
 else
     echo "Arquivo output.tar.gz não encontrado" >> $LOG_FILE
 fi
